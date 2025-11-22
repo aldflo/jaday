@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import Hero from "../components/Hero";
 import PromoCard from "../components/PromoCard";
 import Carrusel from "../components/Carrusel";
@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <Navbar />
+      <NavBar />
       <Hero />
 
       {/* Promociones */}
