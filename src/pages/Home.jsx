@@ -1,29 +1,31 @@
-import NavBar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import PromoCard from "../components/PromoCard";
 import Carrusel from "../components/Carrusel";
 import Footer from "../components/Footer";
-
+import J1 from "../assets/J1.jpg";
 import promo1 from "../assets/promo1.jpg";
-import promo2 from "../assets/promo2.jpg";
-import promo3 from "../assets/promo3.jpg";
-
+import j2 from "../assets/j2.jpg";
+import j3 from "../assets/j3.jpg";
+import j4 from "../assets/j4.jpg";
 export default function Home() {
-  const promoImages = [promo1, promo2, promo3];
+  const promoImages = [J1, promo1];
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <NavBar />
+      <Navbar />
       <Hero />
 
       {/* Promociones */}
       <section id="promos" className="p-6 mt-10">
-        <h2 className="text-3xl font-bold mb-6 text-center">Promociones destacadas</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center">
+          Promociones destacadas
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <PromoCard image={promo1} title="Promo 1" price="299" />
-          <PromoCard image={promo2} title="Promo 2" price="499" />
-          <PromoCard image={promo3} title="Promo 3" price="199" />
+          <PromoCard image={j2} title="Promo 1" price="320 + envio" />
+          <PromoCard image={j3} title="Promo 2" price="270 + envio" />
+          <PromoCard image={j4} title="Promo 3" price="280 +envio" />
         </div>
       </section>
 

@@ -16,7 +16,8 @@ export default function Carrusel({ items }) {
           <img
             key={i}
             src={item}
-            className="min-w-full h-64 object-cover rounded-xl shadow-lg"
+            className="min-w-full h-64 object-contain bg-black rounded-xl shadow-lg"
+
           />
         ))}
       </div>

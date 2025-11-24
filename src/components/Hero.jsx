@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="absolute w-72 h-72 bg-blue-600/40 rounded-full blur-3xl animate-pulse -bottom-20 -right-20"></div>
 
       <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg">
-        ¡Bienvenido a JadayPromo!
+        ¡Bienvenido a JadayPechugas!
       </h1>
 
       <p className="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl">
@@ -21,6 +21,13 @@ export default function Hero() {
       >
         Contáctanos por WhatsApp
       </a>
+
+    <a
+    href="/menu"
+    className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-700 transition mt-4"
+  >
+    Ver productos
+  </a>
     </section>
   );
 }
