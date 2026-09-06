@@ -1,5 +1,5 @@
 import { FaFire, FaArrowRight } from "react-icons/fa";
-import J1 from "../assets/J1.jpg";
+import j8 from "../assets/j8.png";
 
 export default function Hero() {
   return (
@@ -41,7 +41,6 @@ export default function Hero() {
         "
       />
 
-      {/* Contenido */}
       <div
         className="
           relative
@@ -59,9 +58,8 @@ export default function Hero() {
           lg:px-8
         "
       >
-        {/* LADO IZQUIERDO */}
+        {/* TEXTO */}
         <div>
-          {/* Etiqueta superior */}
           <div
             className="
               mb-5
@@ -80,11 +78,9 @@ export default function Hero() {
             "
           >
             <FaFire className="text-orange-300" />
-
             Promociones especiales todos los días
           </div>
 
-          {/* Título */}
           <h1
             className="
               max-w-2xl
@@ -102,7 +98,6 @@ export default function Hero() {
             </span>
           </h1>
 
-          {/* Descripción */}
           <p
             className="
               mt-6
@@ -117,7 +112,6 @@ export default function Hero() {
             Arma tu pedido directamente desde nuestro menú.
           </p>
 
-          {/* BOTÓN ÚNICO */}
           <div className="mt-8">
             <a
               href="/menu"
@@ -145,7 +139,6 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* Indicadores */}
           <div
             className="
               mt-10
@@ -156,30 +149,21 @@ export default function Hero() {
             "
           >
             <div>
-              <p className="text-2xl">
-                🔥
-              </p>
-
+              <p className="text-2xl">🔥</p>
               <p className="mt-1 text-sm text-red-100">
                 Promociones
               </p>
             </div>
 
             <div>
-              <p className="text-2xl">
-                🍗
-              </p>
-
+              <p className="text-2xl">🍗</p>
               <p className="mt-1 text-sm text-red-100">
                 Productos
               </p>
             </div>
 
             <div>
-              <p className="text-2xl">
-                🚚
-              </p>
-
+              <p className="text-2xl">🚚</p>
               <p className="mt-1 text-sm text-red-100">
                 Envíos
               </p>
@@ -187,9 +171,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* LADO DERECHO - IMAGEN */}
+        {/* IMAGEN */}
         <div className="relative">
-          {/* Brillo detrás */}
           <div
             className="
               absolute
@@ -200,7 +183,6 @@ export default function Hero() {
             "
           />
 
-          {/* Imagen */}
           <div
             className="
               relative
@@ -214,10 +196,10 @@ export default function Hero() {
             "
           >
             <img
-              src={J1}
-              alt="JadayPechugas"
+              src={j8}
+              alt="Promoción de pescado JadayPechugas"
               className="
-                h-[500px]
+                h-[520px]
                 w-full
                 rounded-[24px]
                 bg-black
@@ -226,7 +208,6 @@ export default function Hero() {
             />
           </div>
 
-          {/* Tarjeta flotante */}
           <div
             className="
               absolute
@@ -240,33 +221,16 @@ export default function Hero() {
               shadow-2xl
             "
           >
-            <p
-              className="
-                text-xs
-                font-bold
-                text-red-600
-              "
-            >
+            <p className="text-xs font-bold text-red-600">
               🔥 PROMO DESTACADA
             </p>
 
-            <p
-              className="
-                mt-1
-                text-lg
-                font-black
-              "
-            >
-              Pide hoy
+            <p className="mt-1 text-lg font-black">
+              Pescado empanizado
             </p>
 
-            <p
-              className="
-                text-sm
-                text-gray-500
-              "
-            >
-              Consulta promociones disponibles
+            <p className="text-sm text-gray-500">
+              Consulta disponibilidad
             </p>
           </div>
         </div>

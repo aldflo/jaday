@@ -9,6 +9,7 @@ import j4 from "../assets/j4.jpg";
 import j5 from "../assets/j5.jpg";
 import j6 from "../assets/j6.jpg";
 import j7 from "../assets/j7.jpg";
+import j8 from "../assets/j8.png";
 
 import {
   FaFire,
@@ -25,7 +26,17 @@ import { useCart } from "../context/CartContext";
 export default function Menu() {
   const { addToCart } = useCart();
 
-  const promoImages = [J1, promo1, j2, j3, j4, j5, j6, j7];
+  const promoImages = [
+    J1,
+    promo1,
+    j2,
+    j3,
+    j4,
+    j5,
+    j6,
+    j7,
+    j8,
+  ];
 
   const productosFreir = [
     {
@@ -94,6 +105,15 @@ export default function Menu() {
       unidad: "kg",
       descripcion: "Marinadas o enchiladas.",
     },
+    {
+      id: "pescado-empanizado",
+      nombre: "Pescado empanizado",
+      precio: 280,
+      unidad: "kg",
+      descripcion:
+        "Filetes de pescado empanizados, listos para preparar.",
+      destacado: true,
+    },
   ];
 
   const ProductCard = ({ producto }) => {
@@ -102,7 +122,10 @@ export default function Menu() {
         id: producto.id,
         name: producto.nombre,
         price: producto.precio,
-        image: null,
+        image:
+          producto.id === "pescado-empanizado"
+            ? j8
+            : null,
         unit: producto.unidad,
       });
     };
@@ -203,6 +226,7 @@ export default function Menu() {
     <div className="min-h-screen bg-[#fffaf5] text-gray-900">
       <Navbar />
 
+      {/* HEADER */}
       <section
         className="
           bg-gradient-to-br
@@ -246,6 +270,7 @@ export default function Menu() {
       </section>
 
       <main className="mx-auto max-w-7xl px-5 py-16">
+        {/* BENEFICIOS */}
         <section className="mb-16 grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-md">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-600 text-2xl text-white">
@@ -287,6 +312,7 @@ export default function Menu() {
           </div>
         </section>
 
+        {/* PARA FREÍR */}
         <section className="mb-20">
           <div className="mb-8 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-700">
@@ -313,6 +339,7 @@ export default function Menu() {
           </div>
         </section>
 
+        {/* PREPARADOS */}
         <section className="mb-20">
           <div className="mb-8 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-red-100 px-4 py-2 text-sm font-bold text-red-600">
@@ -339,6 +366,7 @@ export default function Menu() {
           </div>
         </section>
 
+        {/* MÁS OPCIONES */}
         <section className="mb-20">
           <div className="mb-8 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-yellow-100 px-4 py-2 text-sm font-bold text-yellow-700">
@@ -365,6 +393,7 @@ export default function Menu() {
           </div>
         </section>
 
+        {/* GALERÍA */}
         <section className="mt-16">
           <div className="mb-8 text-center">
             <span className="rounded-full bg-red-100 px-4 py-2 text-sm font-bold text-red-600">
@@ -374,6 +403,10 @@ export default function Menu() {
             <h2 className="mt-4 text-3xl font-black md:text-4xl">
               Galería de productos
             </h2>
+
+            <p className="mt-2 text-gray-500">
+              Conoce algunos de nuestros productos y promociones.
+            </p>
           </div>
 
           <Carrusel items={promoImages} />
