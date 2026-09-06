@@ -11,7 +11,7 @@ import {
   FaShoppingBag,
 } from "react-icons/fa";
 
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavBar";
 import { useCart } from "../context/CartContext";
 
 export default function Checkout() {

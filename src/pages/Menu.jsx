@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavBar";
 import Carrusel from "../components/Carrusel";
 
 import J1 from "../assets/J1.jpg";
