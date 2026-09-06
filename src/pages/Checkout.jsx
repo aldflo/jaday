@@ -15,7 +15,7 @@ import Navbar from "../components/Navbar";
 import { useCart } from "../context/CartContext";
 
 export default function Checkout() {
-  const { cart, total } = useCart();
+  const { cart, total, clearCart } = useCart();
 
   const [form, setForm] = useState({
     nombre: "",
@@ -44,8 +44,7 @@ export default function Checkout() {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
 
-        const link =
-          `https://www.google.com/maps?q=${lat},${lng}`;
+        const link = `https://www.google.com/maps?q=${lat},${lng}`;
 
         setForm((current) => ({
           ...current,
@@ -53,49 +52,80 @@ export default function Checkout() {
         }));
       },
       () => {
-        alert(
-          "No fue posible obtener tu ubicación."
-        );
+        alert("No fue posible obtener tu ubicación.");
       }
     );
   };
 
   const confirmar = () => {
-    if (
-      !form.nombre ||
-      !form.telefono ||
-      !form.direccion
-    ) {
-      alert(
-        "Completa nombre, teléfono y dirección."
-      );
-
+    if (cart.length === 0) {
+      alert("Tu carrito está vacío.");
       return;
     }
 
-    console.log({
-      cliente: form,
-      productos: cart,
-      total,
-    });
+    if (!form.nombre || !form.telefono || !form.direccion) {
+      alert("Completa nombre, teléfono y dirección.");
+      return;
+    }
 
-    alert(
-      "Pedido preparado para enviarse."
-    );
+    const productosTexto = cart
+      .map(
+        (item) =>
+          `• ${item.quantity} x ${item.name} - $${
+            item.quantity * item.price
+          }`
+      )
+      .join("\n");
+
+    const metodoPago =
+      form.pago === "efectivo"
+        ? "Efectivo"
+        : form.pago === "transferencia"
+        ? "Transferencia"
+        : "Tarjeta";
+
+    const mensaje = `
+🍗 *NUEVO PEDIDO JADAYPECHUGAS*
+
+${productosTexto}
+
+💰 *Subtotal:* $${total}
+
+👤 *DATOS DEL CLIENTE*
+Nombre: ${form.nombre}
+Teléfono: ${form.telefono}
+
+📍 *Dirección:*
+${form.direccion}
+
+🏠 *Referencias:*
+${form.referencia || "Sin referencias"}
+
+🗺 *Ubicación:*
+${form.ubicacion || "No compartida"}
+
+💳 *Forma de pago:*
+${metodoPago}
+
+Gracias.
+    `.trim();
+
+    const url = `https://wa.me/529811309055?text=${encodeURIComponent(
+      mensaje
+    )}`;
+
+    window.open(url, "_blank");
+
+    // Si quieres vaciar el carrito inmediatamente,
+    // descomenta esta línea:
+    // clearCart();
   };
 
   return (
     <div className="min-h-screen bg-[#fffaf5]">
       <Navbar />
 
-      <main
-        className="
-          mx-auto
-          max-w-6xl
-          px-5
-          py-14
-        "
-      >
+      <main className="mx-auto max-w-6xl px-5 py-14">
         <div className="text-center">
           <span
             className="
@@ -111,13 +141,7 @@ export default function Checkout() {
             FINALIZAR COMPRA
           </span>
 
-          <h1
-            className="
-              mt-4
-              text-4xl
-              font-black
-            "
-          >
+          <h1 className="mt-4 text-4xl font-black">
             Completa tu pedido
           </h1>
 
@@ -149,7 +173,7 @@ export default function Checkout() {
             </h2>
 
             <div className="mt-6 space-y-5">
-
+              {/* NOMBRE */}
               <div>
                 <label className="font-bold">
                   Nombre
@@ -185,6 +209,7 @@ export default function Checkout() {
                 </div>
               </div>
 
+              {/* TELÉFONO */}
               <div>
                 <label className="font-bold">
                   Teléfono
@@ -220,6 +245,7 @@ export default function Checkout() {
                 </div>
               </div>
 
+              {/* DIRECCIÓN */}
               <div>
                 <label className="font-bold">
                   Dirección
@@ -255,6 +281,7 @@ export default function Checkout() {
                 </div>
               </div>
 
+              {/* REFERENCIAS */}
               <div>
                 <label className="font-bold">
                   Referencias
@@ -264,7 +291,7 @@ export default function Checkout() {
                   name="referencia"
                   value={form.referencia}
                   onChange={update}
-                  placeholder="Casa azul, portón blanco..."
+                  placeholder="Casa azul, portón de madera..."
                   className="
                     mt-2
                     w-full
@@ -300,6 +327,7 @@ export default function Checkout() {
                     py-3
                     font-bold
                     text-white
+                    transition
                     hover:bg-blue-700
                   "
                 >
@@ -333,9 +361,9 @@ export default function Checkout() {
               </h2>
 
               <div className="mt-5 grid gap-3">
-
+                {/* EFECTIVO */}
                 <label
-                  className="
+                  className={`
                     flex
                     cursor-pointer
                     items-center
@@ -343,7 +371,13 @@ export default function Checkout() {
                     rounded-2xl
                     border
                     p-4
-                  "
+                    transition
+                    ${
+                      form.pago === "efectivo"
+                        ? "border-green-500 bg-green-50"
+                        : "border-gray-200"
+                    }
+                  `}
                 >
                   <input
                     type="radio"
@@ -353,20 +387,16 @@ export default function Checkout() {
                     onChange={update}
                   />
 
-                  <FaMoneyBillWave
-                    className="
-                      text-2xl
-                      text-green-600
-                    "
-                  />
+                  <FaMoneyBillWave className="text-2xl text-green-600" />
 
                   <span className="font-bold">
                     Efectivo
                   </span>
                 </label>
 
+                {/* TRANSFERENCIA */}
                 <label
-                  className="
+                  className={`
                     flex
                     cursor-pointer
                     items-center
@@ -374,32 +404,32 @@ export default function Checkout() {
                     rounded-2xl
                     border
                     p-4
-                  "
+                    transition
+                    ${
+                      form.pago === "transferencia"
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200"
+                    }
+                  `}
                 >
                   <input
                     type="radio"
                     name="pago"
                     value="transferencia"
-                    checked={
-                      form.pago === "transferencia"
-                    }
+                    checked={form.pago === "transferencia"}
                     onChange={update}
                   />
 
-                  <FaUniversity
-                    className="
-                      text-2xl
-                      text-blue-600
-                    "
-                  />
+                  <FaUniversity className="text-2xl text-blue-600" />
 
                   <span className="font-bold">
                     Transferencia
                   </span>
                 </label>
 
+                {/* TARJETA */}
                 <label
-                  className="
+                  className={`
                     flex
                     cursor-pointer
                     items-center
@@ -407,7 +437,13 @@ export default function Checkout() {
                     rounded-2xl
                     border
                     p-4
-                  "
+                    transition
+                    ${
+                      form.pago === "tarjeta"
+                        ? "border-purple-500 bg-purple-50"
+                        : "border-gray-200"
+                    }
+                  `}
                 >
                   <input
                     type="radio"
@@ -417,12 +453,7 @@ export default function Checkout() {
                     onChange={update}
                   />
 
-                  <FaCreditCard
-                    className="
-                      text-2xl
-                      text-purple-600
-                    "
-                  />
+                  <FaCreditCard className="text-2xl text-purple-600" />
 
                   <div>
                     <p className="font-bold">
@@ -434,7 +465,6 @@ export default function Checkout() {
                     </p>
                   </div>
                 </label>
-
               </div>
             </div>
           </div>
@@ -454,36 +484,35 @@ export default function Checkout() {
             >
               <FaShoppingBag className="text-3xl text-yellow-400" />
 
-              <h2
-                className="
-                  mt-4
-                  text-2xl
-                  font-black
-                "
-              >
+              <h2 className="mt-4 text-2xl font-black">
                 Resumen
               </h2>
 
               <div className="mt-6 space-y-4">
-                {cart.map((item) => (
-                  <div
-                    key={item.id}
-                    className="
-                      flex
-                      justify-between
-                      gap-4
-                    "
-                  >
-                    <span>
-                      {item.quantity} × {item.name}
-                    </span>
+                {cart.length === 0 ? (
+                  <p className="text-gray-400">
+                    Tu carrito está vacío.
+                  </p>
+                ) : (
+                  cart.map((item) => (
+                    <div
+                      key={item.id}
+                      className="
+                        flex
+                        justify-between
+                        gap-4
+                      "
+                    >
+                      <span>
+                        {item.quantity} × {item.name}
+                      </span>
 
-                    <span className="font-bold">
-                      $
-                      {item.quantity * item.price}
-                    </span>
-                  </div>
-                ))}
+                      <span className="font-bold">
+                        ${item.quantity * item.price}
+                      </span>
+                    </div>
+                  ))
+                )}
               </div>
 
               <div
@@ -494,41 +523,25 @@ export default function Checkout() {
                   pt-5
                 "
               >
-                <div
-                  className="
-                    flex
-                    items-center
-                    justify-between
-                  "
-                >
+                <div className="flex items-center justify-between">
                   <span className="text-lg">
                     Subtotal
                   </span>
 
-                  <span
-                    className="
-                      text-3xl
-                      font-black
-                    "
-                  >
+                  <span className="text-3xl font-black">
                     ${total}
                   </span>
                 </div>
 
-                <p
-                  className="
-                    mt-2
-                    text-sm
-                    text-gray-400
-                  "
-                >
-                  El envío se calcula o confirma
-                  posteriormente.
+                <p className="mt-2 text-sm text-gray-400">
+                  El envío se calcula o confirma posteriormente.
                 </p>
               </div>
 
               <button
+                type="button"
                 onClick={confirmar}
+                disabled={cart.length === 0}
                 className="
                   mt-7
                   w-full
@@ -540,6 +553,8 @@ export default function Checkout() {
                   text-black
                   transition
                   hover:bg-yellow-300
+                  disabled:cursor-not-allowed
+                  disabled:opacity-50
                 "
               >
                 Confirmar pedido
